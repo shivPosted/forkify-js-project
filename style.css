@@ -221,6 +221,9 @@ h5 {
 .copyright--section a:hover {
   color: #5f5f5f;
 }
+.recipe-detailed-info {
+  background-color: #aaaaaa11;
+}
 
 .recipe--overview {
   width: 100%;
@@ -342,32 +345,40 @@ h5 {
 .recipe-ingredient-list-container {
   padding: 4.8rem 5.4rem;
   background-color: #f2efee;
-  text-align: center;
 }
 
-h4 {
+.recipe-ingredient-list-container h4,
+.how-to-cook-section h4 {
   font-size: 2.4rem;
   font-weight: 500;
   color: #f38e82;
   margin-bottom: 2.8rem;
+  text-align: center;
 }
 
 .ingredient--list {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  row-gap: 4rem;
+  row-gap: 3.2rem;
 }
 
 .ingredient--list--item {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  /* flex-grow: 1; */
+  /* align-items: center; */
+  /* justify-content: space-between; */
+  /* gap: 1rem; */
+  gap: 5px;
   font-weight: 400;
   font-size: 1.8rem;
+  line-height: 1.4;
   color: #6a5556;
 }
 .ingredient--list--item svg {
+  flex-shrink: 0;
+}
+.ingredient--list--item .check--icon {
   height: 2.4rem;
   width: 2.4rem;
   fill: #f38e82;
@@ -513,4 +524,43 @@ h4 {
 
 .close-pop-up:hover {
   color: #222;
+}
+
+.welcome-message-start-serching {
+  text-align: center;
+  padding-top: 4rem;
+  gap: 1.2rem;
+}
+
+.welcome-message-start-serching p {
+  font-size: 2.4rem;
+  /* width: 50%; */
+  margin-top: 1.2rem;
+}
+
+.welcome-message-start-serching svg {
+  width: 4.8rem;
+  height: 4.8rem;
+  fill: #f38e82;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  text-align: center;
+  margin-top: 3.2rem;
+}
+
+.spinner svg {
+  width: 8rem;
+  height: 8rem;
+  fill: #f38e82;
+  animation: rotate 2s infinite linear;
 }
