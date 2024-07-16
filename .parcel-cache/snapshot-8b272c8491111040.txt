@@ -1,20 +1,26 @@
-5884
+5896
+76/home/shiv/Projects/Forkify/node_modules/fractional/releases/fraction-0.1.js1721140728564072742 0
+60/home/shiv/Projects/Forkify/node_modules/fractional/releases1721140728564072742 1
+62/home/shiv/Projects/Forkify/node_modules/fractional/index.html1721140728564072742 0
+67/home/shiv/Projects/Forkify/node_modules/fractional/array_mixins.js1721140728564072742 0
+61/home/shiv/Projects/Forkify/node_modules/fractional/README.md1721140728564072742 0
+64/home/shiv/Projects/Forkify/node_modules/fractional/package.json1721140728564072742 0
 55/home/shiv/Projects/Forkify/dist/index.3a01df49.css.map1721126888770456533 0
 51/home/shiv/Projects/Forkify/dist/index.3a01df49.css1721126888770456533 0
 51/home/shiv/Projects/Forkify/dist/icons.21bad73c.svg1721126888760456533 0
 50/home/shiv/Projects/Forkify/dist/index.e37f48ea.js1721126888750456533 0
 67/home/shiv/Projects/Forkify/forkify-architecture-recipe-loading.png1715894968934420885 0
 37/home/shiv/Projects/Forkify/style.css1720895701129162776 0
-48/home/shiv/Projects/Forkify/src/js/controller.js1721129668100456244 0
+48/home/shiv/Projects/Forkify/src/js/controller.js1721141836604073566 0
 34/home/shiv/Projects/Forkify/src/js1721123542070456386 1
 45/home/shiv/Projects/Forkify/src/img/icons.svg1715894968934420885 0
 47/home/shiv/Projects/Forkify/src/img/favicon.png1715894968934420885 0
 44/home/shiv/Projects/Forkify/src/img/logo.png1715894968934420885 0
 35/home/shiv/Projects/Forkify/src/img1720853182947272983 1
 31/home/shiv/Projects/Forkify/src1720853202707272974 1
-45/home/shiv/Projects/Forkify/package-lock.json1721126735870457454 0
+45/home/shiv/Projects/Forkify/package-lock.json1721140728644072742 0
 39/home/shiv/Projects/Forkify/images.jpeg1720688297987607910 0
-40/home/shiv/Projects/Forkify/package.json1721125799640458092 0
+40/home/shiv/Projects/Forkify/package.json1721140728654072742 0
 38/home/shiv/Projects/Forkify/index.html1721126416940458696 0
 69/home/shiv/Projects/Forkify/node_modules/posthtml-render/changelog.md1721126723270457426 0
 72/home/shiv/Projects/Forkify/node_modules/posthtml-render/dist/index.d.ts1721126723410457427 0
@@ -742,7 +748,7 @@
 51/home/shiv/Projects/Forkify/node_modules/fill-range1721126723160457426 1
 82/home/shiv/Projects/Forkify/node_modules/@swc/helpers/src/_array_like_to_array.mjs1721126725050457433 0
 109/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-htmlnano/node_modules/css-select/lib/sort.d.ts.map1721126723730457428 0
-59/home/shiv/Projects/Forkify/node_modules/.package-lock.json1721126735910457454 0
+59/home/shiv/Projects/Forkify/node_modules/.package-lock.json1721140728664072742 0
 75/home/shiv/Projects/Forkify/node_modules/@parcel/core/lib/PackagerRunner.js1721126724540457431 0
 49/home/shiv/Projects/Forkify/node_modules/get-port1721126723220457426 1
 82/home/shiv/Projects/Forkify/node_modules/entities/lib/generated/decode-data-xml.js1721126723430457427 0
@@ -1006,6 +1012,7 @@
 93/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-htmlnano/node_modules/css-tree/lib1721126724340457430 1
 66/home/shiv/Projects/Forkify/node_modules/cosmiconfig/dist/index.js1721126723450457427 0
 62/home/shiv/Projects/Forkify/node_modules/css-tree/dist/data.js1721126724680457432 0
+60/home/shiv/Projects/Forkify/node_modules/fractional/index.js1721140728564072742 0
 99/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-htmlnano/node_modules/css-tree/README.md1721126724630457431 0
 96/home/shiv/Projects/Forkify/node_modules/@parcel/transformer-posthtml/src/PostHTMLTransformer.js1721126723310457427 0
 86/home/shiv/Projects/Forkify/node_modules/csso/node_modules/css-tree/lib/lexer/trace.js1721126724870457432 0
@@ -1212,6 +1219,7 @@
 96/home/shiv/Projects/Forkify/node_modules/@parcel/runtime-js/src/helpers/browser/esm-js-loader.js1721126723670457428 0
 75/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/features/spdy.js1721126725170457433 0
 92/home/shiv/Projects/Forkify/node_modules/@parcel/runtime-js/src/helpers/browser/js-loader.js1721126723800457428 0
+76/home/shiv/Projects/Forkify/node_modules/fractional/releases/fraction-0.2.js1721140728564072742 0
 84/home/shiv/Projects/Forkify/node_modules/@parcel/runtime-service-worker/package.json1721126723280457427 0
 70/home/shiv/Projects/Forkify/node_modules/@swc/helpers/esm/_inherits.js1721126724390457431 0
 103/home/shiv/Projects/Forkify/node_modules/@parcel/core/test/fixtures/custom-targets-distdir/package.json1721126724820457432 0
@@ -1526,6 +1534,7 @@
 60/home/shiv/Projects/Forkify/node_modules/@swc/helpers/_/_get1721126724900457432 1
 60/home/shiv/Projects/Forkify/node_modules/is-extglob/index.js1721126723200457426 0
 121/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-svgo/node_modules/css-tree/lib/syntax/pseudo/nth-last-child.js1721126724470457431 0
+41/home/shiv/Projects/Forkify/src/js/viewJS1721136927324073832 1
 91/home/shiv/Projects/Forkify/node_modules/@parcel/runtime-js/lib/helpers/node/wasm-loader.js1721126723930457429 0
 70/home/shiv/Projects/Forkify/node_modules/@parcel/runtime-react-refresh1721126723250457426 1
 94/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-svgo/node_modules/svgo/package.json1721126724360457430 0
@@ -2171,6 +2180,7 @@
 63/home/shiv/Projects/Forkify/node_modules/@parcel/diagnostic/src1721126723240457426 1
 76/home/shiv/Projects/Forkify/node_modules/css-tree/lib/syntax/node/AnPlusB.js1721126724540457431 0
 90/home/shiv/Projects/Forkify/node_modules/@swc/helpers/_/_class_check_private_static_access1721126724690457432 1
+55/home/shiv/Projects/Forkify/src/js/viewJS/recipeView.js1721142640954073128 0
 72/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/regions/RO.js1721126725150457433 0
 71/home/shiv/Projects/Forkify/node_modules/detect-libc/lib/detect-libc.js1721126723390457427 0
 103/home/shiv/Projects/Forkify/node_modules/@swc/helpers/_/_class_static_private_field_update/package.json1721126724800457432 0
@@ -3267,6 +3277,7 @@
 117/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-htmlnano/node_modules/css-tree/lib/syntax/scope/default.js1721126724130457430 0
 72/home/shiv/Projects/Forkify/node_modules/@swc/helpers/src/_construct.mjs1721126725080457433 0
 61/home/shiv/Projects/Forkify/node_modules/@swc/helpers/scripts1721126724560457431 1
+51/home/shiv/Projects/Forkify/node_modules/fractional1721140728364072743 1
 86/home/shiv/Projects/Forkify/node_modules/dom-serializer/node_modules/entities/lib/maps1721126723500457427 1
 87/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/features/css-text-justify.js1721126724710457432 0
 65/home/shiv/Projects/Forkify/node_modules/semver/ranges/outside.js1721126723720457428 0
@@ -3409,7 +3420,7 @@
 91/home/shiv/Projects/Forkify/node_modules/@swc/helpers/esm/_tagged_template_literal_loose.js1721126724500457431 0
 61/home/shiv/Projects/Forkify/node_modules/msgpackr/SECURITY.md1721126724360457430 0
 73/home/shiv/Projects/Forkify/node_modules/css-tree/cjs/generator/index.cjs1721126724200457430 0
-43/home/shiv/Projects/Forkify/src/js/model.js1721129510110454440 0
+43/home/shiv/Projects/Forkify/src/js/model.js1721140126974073449 0
 71/home/shiv/Projects/Forkify/node_modules/css-what/lib/es/stringify.d.ts1721126723740457428 0
 118/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/moveGroupAttrsToElems.js1721126723940457429 0
 59/home/shiv/Projects/Forkify/node_modules/msgpackr/pack.d.ts1721126724360457430 0
@@ -4768,6 +4779,7 @@
 72/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/regions/GI.js1721126724930457432 0
 67/home/shiv/Projects/Forkify/node_modules/csso/cjs/replace/Value.cjs1721126723920457429 0
 72/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/regions/CD.js1721126724260457430 0
+60/home/shiv/Projects/Forkify/node_modules/fractional/tests.js1721140728564072742 0
 61/home/shiv/Projects/Forkify/node_modules/@swc/core/spack.d.ts1721126723570457428 0
 72/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/regions/NL.js1721126725100457433 0
 72/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/regions/SO.js1721126725170457433 0

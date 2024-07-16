@@ -18,5 +18,8 @@
   "homepage": "https://github.com/shivPosted/forkify-js-project#readme",
   "devDependencies": {
     "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "fractional": "^1.0.0"
   }
 }

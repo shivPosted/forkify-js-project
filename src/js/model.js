@@ -25,4 +25,3 @@ export async function loadRecipe(id) {
     alert(err);
   }
 }
-console.log(state.recipe);
