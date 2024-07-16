@@ -1,0 +1,22 @@
+{
+  "name": "forkify-shiv",
+  "version": "1.0.0",
+  "description": "recipe-fetcher-application",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shivPosted/forkify-js-project.git"
+  },
+  "author": "Shiv Pratap Singh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shivPosted/forkify-js-project/issues"
+  },
+  "homepage": "https://github.com/shivPosted/forkify-js-project#readme",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  }
+}
