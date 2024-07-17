@@ -1,0 +1,4 @@
+class ResultsView {
+  #parentElem;
+  #data;
+}

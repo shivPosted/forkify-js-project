@@ -4,6 +4,7 @@ console.log(Fraction);
 class RecipeView {
   #data;
   #parentElem = document.querySelector('.recipe-detailed-info');
+  #errorMsg = 'We could not find that recipe.Please try again 😢😢';
 
   render(data) {
     this.#data = data;
@@ -23,6 +24,25 @@ class RecipeView {
     this.#parentElem.insertAdjacentHTML('afterbegin', markUp);
   }
 
+  //getting rnder function from the controller which inturn is calling this mehtod
+  renderEventHandler(render) {
+    ['hashchange', 'load'].forEach(ev => {
+      window.addEventListener(ev, render);
+    });
+  }
+
+  handleError(message = this.#errorMsg) {
+    this.#clear();
+    const markUp = `
+    <div class="error-box">
+            <svg class="error--icon">
+              <use href="${icons}#icon-alert-triangle"></use>
+            </svg>
+            <p>${message}</p>
+          </div>
+    `;
+    this.#parentElem.insertAdjacentHTML('afterbegin', markUp);
+  }
   #clear() {
     this.#parentElem.innerHTML = '';
   }

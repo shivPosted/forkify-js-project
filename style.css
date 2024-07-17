@@ -526,19 +526,22 @@ h5 {
   color: #222;
 }
 
-.welcome-message-start-serching {
+.welcome-message-start-serching,
+.error-box {
   text-align: center;
   padding-top: 4rem;
   gap: 1.2rem;
 }
 
-.welcome-message-start-serching p {
+.welcome-message-start-serching p,
+.error-box p {
   font-size: 2.4rem;
   /* width: 50%; */
   margin-top: 1.2rem;
 }
 
-.welcome-message-start-serching svg {
+.welcome-message-start-serching svg,
+.error-box svg {
   width: 4.8rem;
   height: 4.8rem;
   fill: #f38e82;

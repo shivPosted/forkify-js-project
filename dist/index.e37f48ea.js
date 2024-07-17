@@ -588,20 +588,10 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _modelJs = require("./model.js");
 var _recipeViewJs = require("./viewJS/recipeView.js");
 var _recipeViewJsDefault = parcelHelpers.interopDefault(_recipeViewJs);
-const timeout = function(s) {
-    return new Promise(function(_, reject) {
-        setTimeout(function() {
-            reject(new Error(`Request took too long! Timeout after ${s} second`));
-        }, s * 1000);
-    });
-};
-// https://forkify-api.herokuapp.com/v2
-//5b0f13db-34ac-41da-941f-76dbebc41504
-///////////////////////////////////////
-// const id = '664c8f193e7aa067e94e8706';
-// const id = '664c8f193e7aa067e94e8610';
-// const id = '664c8f193e7aa067e94e8534';
-const renderRecipe = async function() {
+var _searchViewJs = require("./viewJS/searchView.js");
+var _searchViewJsDefault = parcelHelpers.interopDefault(_searchViewJs);
+const serchBtn = document.querySelector(".search-btn");
+const controlRecipe = async function() {
     //1.loading the recipe
     const id = window.location.hash.slice(1);
     if (!id) return;
@@ -613,31 +603,45 @@ const renderRecipe = async function() {
     //2. rendering the recipe
     // console.log(ingredientList);
     } catch (err) {
-        alert(err.message);
-        console.error(err);
+        console.log(err);
+        (0, _recipeViewJsDefault.default).handleError();
     }
 };
-[
-    "hashchange",
-    "load"
-].forEach((ev)=>{
-    window.addEventListener(ev, renderRecipe);
-});
+const controlSearch = async function() {
+    try {
+        const searchKey = (0, _searchViewJsDefault.default).getQuery();
+        if (!searchKey) return;
+        await _modelJs.loadSearch(searchKey);
+        console.log(_modelJs.state.searchedResults.results);
+    } catch (err) {
+        console.log(err);
+    }
+};
+function init() {
+    (0, _recipeViewJsDefault.default).renderEventHandler(controlRecipe);
+    (0, _searchViewJsDefault.default).addHandlerSearch(controlSearch);
+}
+init();
 
-},{"./model.js":"Y4A21","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./viewJS/recipeView.js":"dz1cH"}],"Y4A21":[function(require,module,exports) {
+},{"./model.js":"Y4A21","./viewJS/recipeView.js":"dz1cH","./viewJS/searchView.js":"hNmQm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"Y4A21":[function(require,module,exports) {
 // import { async } from 'regenerator-runtime';
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
+parcelHelpers.export(exports, "loadSearch", ()=>loadSearch);
+var _configJs = require("./config.js");
+var _helperJs = require("./helper.js");
 const state = {
-    apiKey: "5b0f13db-34ac-41da-941f-76dbebc41504"
+    searchedResults: {
+        query: "",
+        results: []
+    }
 };
 async function loadRecipe(id) {
     try {
-        const res = await fetch(`https://forkify-api.herokuapp.com/api/v2/recipes/${id}?key=${state.apiKey}`);
-        const data = await res.json();
-        if (!res.ok) throw new Error(`${data.message}`);
+        const url = `${(0, _configJs.API_BASE_URL)}${id}?key=${(0, _configJs.API_KEY)}`;
+        const data = await (0, _helperJs.getJSON)(url);
         const { recipe } = data.data;
         state.recipe = {
             time: recipe.cooking_time,
@@ -649,11 +653,28 @@ async function loadRecipe(id) {
             ingredients: recipe.ingredients
         };
     } catch (err) {
-        alert(err);
+        throw err;
+    }
+}
+async function loadSearch(searchKey) {
+    try {
+        const url = `${(0, _configJs.API_BASE_URL)}?search=${searchKey}&key=${(0, _configJs.API_KEY)}`;
+        const data = await (0, _helperJs.getJSON)(url);
+        const { recipes } = data.data;
+        state.searchedResults.results = recipes.map((record)=>{
+            return {
+                img: record.image_url,
+                title: record.title,
+                publisher: record.publisher,
+                id: record.id
+            };
+        });
+    } catch (err) {
+        throw err;
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gkKU3":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"k5Hzs","./helper.js":"lVRAz"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -683,7 +704,43 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"dz1cH":[function(require,module,exports) {
+},{}],"k5Hzs":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "API_BASE_URL", ()=>API_BASE_URL);
+parcelHelpers.export(exports, "API_KEY", ()=>API_KEY);
+parcelHelpers.export(exports, "TIME_OUT_SEC", ()=>TIME_OUT_SEC);
+const API_BASE_URL = "https://forkify-api.herokuapp.com/api/v2/recipes/";
+const API_KEY = "5b0f13db-34ac-41da-941f-76dbebc41504";
+const TIME_OUT_SEC = 10;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lVRAz":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getJSON", ()=>getJSON);
+var _configJs = require("./config.js");
+const timeOut = function(s) {
+    return new Promise((_, reject)=>{
+        setTimeout(()=>{
+            reject(`Request Timout after ${s} seconds`);
+        }, s * 1000);
+    });
+};
+const getJSON = async function(url) {
+    try {
+        const res = await Promise.race([
+            fetch(url),
+            timeOut((0, _configJs.TIME_OUT_SEC))
+        ]);
+        const data = await res.json();
+        if (!res.ok) throw new Error(`${data.message} (${res.statusText})`);
+        return data;
+    } catch (err) {
+        throw err;
+    }
+};
+
+},{"./config.js":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dz1cH":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
@@ -693,6 +750,7 @@ console.log((0, _fractional.Fraction));
 class RecipeView {
     #data;
     #parentElem = document.querySelector(".recipe-detailed-info");
+    #errorMsg = "We could not find that recipe.Please try again \uD83D\uDE22\uD83D\uDE22";
     render(data) {
         this.#data = data;
         this.#clear();
@@ -707,6 +765,27 @@ class RecipeView {
             </svg>
           </div>
           `;
+        this.#parentElem.insertAdjacentHTML("afterbegin", markUp);
+    }
+    //getting rnder function from the controller which inturn is calling this mehtod
+    renderEventHandler(render) {
+        [
+            "hashchange",
+            "load"
+        ].forEach((ev)=>{
+            window.addEventListener(ev, render);
+        });
+    }
+    handleError(message = this.#errorMsg) {
+        this.#clear();
+        const markUp = `
+    <div class="error-box">
+            <svg class="error--icon">
+              <use href="${(0, _iconsSvgDefault.default)}#icon-alert-triangle"></use>
+            </svg>
+            <p>${message}</p>
+          </div>
+    `;
         this.#parentElem.insertAdjacentHTML("afterbegin", markUp);
     }
     #clear() {
@@ -1078,6 +1157,31 @@ Fraction.primeFactors = function(n) {
 };
 module.exports.Fraction = Fraction;
 
-},{}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
+},{}],"hNmQm":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class SearchView {
+    #parentElem = document.querySelector(".search");
+    #clear() {
+        this.#parentElem.querySelector(".search-box").value = "";
+    }
+    getQuery() {
+        const query = this.#parentElem.querySelector(".search-box").value;
+        this.#clear();
+        return query;
+    }
+    addHandlerSearch(handle) {
+        this.#parentElem.addEventListener("submit", function(e) {
+            e.preventDefault();
+            handle();
+        });
+    //   this.#parentElem
+    //     .querySelector('.search-box')
+    //     .addEventListener('click', function () {});
+    }
+}
+exports.default = new SearchView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
 
 //# sourceMappingURL=index.e37f48ea.js.map
