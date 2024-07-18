@@ -1,28 +1,11 @@
 import icons from 'url:../../img/icons.svg';
 import { Fraction } from 'fractional';
-console.log(Fraction);
-class RecipeView {
-  #data;
-  #parentElem = document.querySelector('.recipe-detailed-info');
-  #errorMsg = 'We could not find that recipe.Please try again 😢😢';
-
-  render(data) {
-    this.#data = data;
-    this.#clear();
-    this.#parentElem.insertAdjacentHTML('afterbegin', this.#buildMarkup());
-  }
-
-  renderSpinner() {
-    this.#clear();
-    const markUp = `
-                    <div class="spinner">
-            <svg class="spinner--icon">
-              <use href="${icons}#icon-loader"></use>
-            </svg>
-          </div>
-          `;
-    this.#parentElem.insertAdjacentHTML('afterbegin', markUp);
-  }
+import View from './view.js';
+// console.log(Fraction);
+class RecipeView extends View {
+  _data;
+  _parentElem = document.querySelector('.recipe-detailed-info');
+  _errorMsg = 'We could not find that recipe.Please try again 😢😢';
 
   //getting rnder function from the controller which inturn is calling this mehtod
   renderEventHandler(render) {
@@ -31,28 +14,12 @@ class RecipeView {
     });
   }
 
-  handleError(message = this.#errorMsg) {
-    this.#clear();
-    const markUp = `
-    <div class="error-box">
-            <svg class="error--icon">
-              <use href="${icons}#icon-alert-triangle"></use>
-            </svg>
-            <p>${message}</p>
-          </div>
-    `;
-    this.#parentElem.insertAdjacentHTML('afterbegin', markUp);
-  }
-  #clear() {
-    this.#parentElem.innerHTML = '';
-  }
-
-  #buildMarkup() {
+  _buildMarkup() {
     return `<div class="recipe--overview">
     <figure>
-      <img src=${this.#data.img} alt="${this.#data.title}" />
+      <img src=${this._data.img} alt="${this._data.title}" />
       <h1 class="recipe--title">
-        <span>${this.#data.title}</span>
+        <span>${this._data.title}</span>
       </h1>
     </figure>
     <div class="recipe--overview--options">
@@ -60,13 +27,13 @@ class RecipeView {
         <svg class="clock--icon">
           <use href="${icons}#icon-clock"></use>
         </svg>
-        <span>${this.#data.time}</span> Minutes
+        <span>${this._data.time}</span> Minutes
       </div>
       <div class="serving--selector">
         <svg class="user--icon">
           <use href="${icons}#icon-users"></use>
         </svg>
-        <span>${this.#data.servings}</span> servings
+        <span>${this._data.servings}</span> servings
         <svg class="minus--icon">
           <use href="${icons}#icon-minus-circle"></use>
         </svg>
@@ -83,7 +50,7 @@ class RecipeView {
     <div class="recipe-ingredient-list-container">
       <h4>RECIPE INGREDIENTS</h4>
       <ul class="ingredient--list">
-       ${this.#generateMarkUpIngrdedients()}
+       ${this._generateMarkUpIngrdedients()}
       </ul>
     </div>
 
@@ -91,10 +58,10 @@ class RecipeView {
       <h4>HOW TO COOK</h4>
       <p>
         This recipe was carefully designed and tested by
-       <span class="recipe-source-id">${this.#data.publisher}</span>. Please
+       <span class="recipe-source-id">${this._data.publisher}</span>. Please
         check out directions at their website.
       </p>
-      <a href="${this.#data.source}">
+      <a href="${this._data.source}">
         <button class="btn go-to-btn">
           DIRECTIONS
           <svg class="arrow--icon">
@@ -107,8 +74,8 @@ class RecipeView {
 </div>`;
   }
 
-  #generateMarkUpIngrdedients() {
-    return this.#data.ingredients.reduce((accum, elem) => {
+  _generateMarkUpIngrdedients() {
+    return this._data.ingredients.reduce((accum, elem) => {
       let unit, quantity;
       quantity = elem.quantity ? new Fraction(elem.quantity).toString() : '';
       unit = elem.unit ? elem.unit : '';

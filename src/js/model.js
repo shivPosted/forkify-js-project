@@ -1,11 +1,13 @@
 // import { async } from 'regenerator-runtime';
-import { API_BASE_URL } from './config.js';
+import { API_BASE_URL, API_KEY, RES_PER_PAGE } from './config.js';
 import { API_KEY } from './config.js';
 import { getJSON } from './helper.js';
 export const state = {
   searchedResults: {
     query: '',
     results: [],
+    pageNo: 1,
+    resPerPage: RES_PER_PAGE,
   },
 };
 
