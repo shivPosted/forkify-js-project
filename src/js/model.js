@@ -27,6 +27,7 @@ export async function loadRecipe(id) {
       servings: recipe.servings,
       ingredients: recipe.ingredients,
     };
+    console.log(recipe.ingredients);
   } catch (err) {
     throw err;
   }
@@ -37,6 +38,7 @@ export async function loadSearch(searchKey) {
     const url = `${API_BASE_URL}?search=${searchKey}&key=${API_KEY}`;
     const data = await getJSON(url);
     const { recipes } = data.data;
+    state.searchedResults.pageNo = 1;
     state.searchedResults.results = recipes.map(record => {
       return {
         img: record.image_url,
@@ -56,4 +58,18 @@ export const getSearchPaged = function (page = state.searchedResults.pageNo) {
   const end = page * RES_PER_PAGE;
 
   return state.searchedResults.results.slice(start, end);
+};
+
+export const changeServings = function (servingOps) {
+  state.recipe.ingredients.forEach(ing => {
+    if (!ing.quantity) return;
+    const divider = ing.quantity / state.recipe.servings;
+    if (servingOps === '+') {
+      ing.quantity = (+ing.quantity + divider).toFixed(1);
+    } else {
+      ing.quantity = (+ing.quantity - divider).toFixed(1);
+    }
+  });
+  if (servingOps === '+') state.recipe.servings += 1;
+  else state.recipe.servings -= 1;
 };

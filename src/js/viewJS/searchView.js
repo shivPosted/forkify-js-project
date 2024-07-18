@@ -18,10 +18,6 @@ class SearchView extends View {
       e.preventDefault();
       handle();
     });
-
-    //   this.#parentElem
-    //     .querySelector('.search-box')
-    //     .addEventListener('click', function () {});
   }
 }
 

@@ -34,10 +34,10 @@ class RecipeView extends View {
           <use href="${icons}#icon-users"></use>
         </svg>
         <span>${this._data.servings}</span> servings
-        <svg class="minus--icon">
+        <svg class="minus--icon ing-updater" data-icon-op="-">
           <use href="${icons}#icon-minus-circle"></use>
         </svg>
-        <svg class="plus--icon">
+        <svg class="plus--icon ing-updater" data-icon-op="+">
           <use href="${icons}#icon-plus-circle"></use>
         </svg>
       </div>
@@ -50,7 +50,17 @@ class RecipeView extends View {
     <div class="recipe-ingredient-list-container">
       <h4>RECIPE INGREDIENTS</h4>
       <ul class="ingredient--list">
-       ${this._generateMarkUpIngrdedients()}
+       ${this._data.ingredients.reduce((accum, elem) => {
+         let unit, quantity;
+         quantity = elem.quantity ? new Fraction(elem.quantity).toString() : '';
+         unit = elem.unit ? elem.unit : '';
+         return (accum += `<li class="ingredient--list--item">
+                                <svg class="check--icon">
+                                   <use href="${icons}#icon-check"></use>
+                                </svg>
+                                 <span>${quantity} ${unit} ${elem.description}</span>
+                               </li>`);
+       }, '')}
       </ul>
     </div>
 
@@ -74,18 +84,15 @@ class RecipeView extends View {
 </div>`;
   }
 
-  _generateMarkUpIngrdedients() {
-    return this._data.ingredients.reduce((accum, elem) => {
-      let unit, quantity;
-      quantity = elem.quantity ? new Fraction(elem.quantity).toString() : '';
-      unit = elem.unit ? elem.unit : '';
-      return (accum += `<li class="ingredient--list--item">
-                              <svg class="check--icon">
-                                 <use href="${icons}#icon-check"></use>
-                              </svg>
-                               <span>${quantity} ${unit} ${elem.description}</span>
-                             </li>`);
-    }, '');
+  addHandlerIngredients(handle) {
+    this._parentElem.addEventListener('click', function (e) {
+      const target = e.target.closest('.ing-updater');
+      if (!target) return;
+      console.log(target);
+      const operator = target.dataset.iconOp;
+      console.log(operator);
+      handle(operator);
+    });
   }
 }
 

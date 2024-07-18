@@ -4,6 +4,7 @@ import recipeView from './viewJS/recipeView.js';
 import searchView from './viewJS/searchView.js';
 import resultsView from './viewJS/resultsView.js';
 import paginationView from './viewJS/paginationView.js';
+
 import { RES_PER_PAGE } from './config.js';
 
 const controlRecipe = async function () {
@@ -17,11 +18,8 @@ const controlRecipe = async function () {
     await model.loadRecipe(id);
 
     recipeView.render(model.state.recipe);
-    // console.log(time, img, source, title, publisher, servings, ingredients);
 
     //2. rendering the recipe
-
-    // console.log(ingredientList);
   } catch (err) {
     console.log(err);
     recipeView.handleError();
@@ -49,10 +47,18 @@ const controlPagination = function (page) {
   paginationView.render(model.state.searchedResults);
 };
 
+const controlServings = function (operator) {
+  model.changeServings(operator);
+  // ingredientsView.render(model.state.recipe.ingredients);
+  recipeView.render(model.state.recipe);
+  console.log('click');
+};
+
 function init() {
   recipeView.renderEventHandler(controlRecipe);
   searchView.addHandlerSearch(controlSearch);
   paginationView.addHandlerClick(controlPagination);
+  recipeView.addHandlerIngredients(controlServings);
 }
 
 init();

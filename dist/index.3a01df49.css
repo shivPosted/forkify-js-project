@@ -142,6 +142,7 @@ header > img {
   padding-inline: 3.2rem;
   transition: all .5s;
   display: flex;
+  overflow-x: hidden;
 }
 
 .search---items---row:hover {

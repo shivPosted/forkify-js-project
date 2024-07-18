@@ -603,9 +603,7 @@ const controlRecipe = async function() {
         (0, _recipeViewJsDefault.default).renderSpinner();
         await _modelJs.loadRecipe(id);
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
-    // console.log(time, img, source, title, publisher, servings, ingredients);
     //2. rendering the recipe
-    // console.log(ingredientList);
     } catch (err) {
         console.log(err);
         (0, _recipeViewJsDefault.default).handleError();
@@ -628,10 +626,17 @@ const controlPagination = function(page) {
     (0, _resultsViewJsDefault.default).render(_modelJs.getSearchPaged(page));
     (0, _paginationViewJsDefault.default).render(_modelJs.state.searchedResults);
 };
+const controlServings = function(operator) {
+    _modelJs.changeServings(operator);
+    // ingredientsView.render(model.state.recipe.ingredients);
+    (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
+    console.log("click");
+};
 function init() {
     (0, _recipeViewJsDefault.default).renderEventHandler(controlRecipe);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearch);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
+    (0, _recipeViewJsDefault.default).addHandlerIngredients(controlServings);
 }
 init();
 
@@ -643,6 +648,7 @@ parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearch", ()=>loadSearch);
 parcelHelpers.export(exports, "getSearchPaged", ()=>getSearchPaged);
+parcelHelpers.export(exports, "changeServings", ()=>changeServings);
 var _configJs = require("./config.js");
 var _helperJs = require("./helper.js");
 const state = {
@@ -667,6 +673,7 @@ async function loadRecipe(id) {
             servings: recipe.servings,
             ingredients: recipe.ingredients
         };
+        console.log(recipe.ingredients);
     } catch (err) {
         throw err;
     }
@@ -676,6 +683,7 @@ async function loadSearch(searchKey) {
         const url = `${(0, _configJs.API_BASE_URL)}?search=${searchKey}&key=${(0, _configJs.API_KEY)}`;
         const data = await (0, _helperJs.getJSON)(url);
         const { recipes } = data.data;
+        state.searchedResults.pageNo = 1;
         state.searchedResults.results = recipes.map((record)=>{
             return {
                 img: record.image_url,
@@ -693,6 +701,16 @@ const getSearchPaged = function(page = state.searchedResults.pageNo) {
     const start = (page - 1) * (0, _configJs.RES_PER_PAGE);
     const end = page * (0, _configJs.RES_PER_PAGE);
     return state.searchedResults.results.slice(start, end);
+};
+const changeServings = function(servingOps) {
+    state.recipe.ingredients.forEach((ing)=>{
+        if (!ing.quantity) return;
+        const divider = ing.quantity / state.recipe.servings;
+        if (servingOps === "+") ing.quantity = (+ing.quantity + divider).toFixed(1);
+        else ing.quantity = (+ing.quantity - divider).toFixed(1);
+    });
+    if (servingOps === "+") state.recipe.servings += 1;
+    else state.recipe.servings -= 1;
 };
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"k5Hzs","./helper.js":"lVRAz"}],"gkKU3":[function(require,module,exports) {
@@ -735,7 +753,7 @@ parcelHelpers.export(exports, "RES_PER_PAGE", ()=>RES_PER_PAGE);
 const API_BASE_URL = "https://forkify-api.herokuapp.com/api/v2/recipes/";
 const API_KEY = "5b0f13db-34ac-41da-941f-76dbebc41504";
 const TIME_OUT_SEC = 10;
-const RES_PER_PAGE = 10;
+const RES_PER_PAGE = 12;
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lVRAz":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -805,10 +823,10 @@ class RecipeView extends (0, _viewJsDefault.default) {
           <use href="${0, _iconsSvgDefault.default}#icon-users"></use>
         </svg>
         <span>${this._data.servings}</span> servings
-        <svg class="minus--icon">
+        <svg class="minus--icon ing-updater" data-icon-op="-">
           <use href="${0, _iconsSvgDefault.default}#icon-minus-circle"></use>
         </svg>
-        <svg class="plus--icon">
+        <svg class="plus--icon ing-updater" data-icon-op="+">
           <use href="${0, _iconsSvgDefault.default}#icon-plus-circle"></use>
         </svg>
       </div>
@@ -821,7 +839,17 @@ class RecipeView extends (0, _viewJsDefault.default) {
     <div class="recipe-ingredient-list-container">
       <h4>RECIPE INGREDIENTS</h4>
       <ul class="ingredient--list">
-       ${this._generateMarkUpIngrdedients()}
+       ${this._data.ingredients.reduce((accum, elem)=>{
+            let unit, quantity;
+            quantity = elem.quantity ? new (0, _fractional.Fraction)(elem.quantity).toString() : "";
+            unit = elem.unit ? elem.unit : "";
+            return accum += `<li class="ingredient--list--item">
+                                <svg class="check--icon">
+                                   <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
+                                </svg>
+                                 <span>${quantity} ${unit} ${elem.description}</span>
+                               </li>`;
+        }, "")}
       </ul>
     </div>
 
@@ -844,18 +872,15 @@ class RecipeView extends (0, _viewJsDefault.default) {
   </div>
 </div>`;
     }
-    _generateMarkUpIngrdedients() {
-        return this._data.ingredients.reduce((accum, elem)=>{
-            let unit, quantity;
-            quantity = elem.quantity ? new (0, _fractional.Fraction)(elem.quantity).toString() : "";
-            unit = elem.unit ? elem.unit : "";
-            return accum += `<li class="ingredient--list--item">
-                              <svg class="check--icon">
-                                 <use href="${0, _iconsSvgDefault.default}#icon-check"></use>
-                              </svg>
-                               <span>${quantity} ${unit} ${elem.description}</span>
-                             </li>`;
-        }, "");
+    addHandlerIngredients(handle) {
+        this._parentElem.addEventListener("click", function(e) {
+            const target = e.target.closest(".ing-updater");
+            if (!target) return;
+            console.log(target);
+            const operator = target.dataset.iconOp;
+            console.log(operator);
+            handle(operator);
+        });
     }
 }
 exports.default = new RecipeView();
@@ -1211,9 +1236,6 @@ class SearchView extends (0, _viewJsDefault.default) {
             e.preventDefault();
             handle();
         });
-    //   this.#parentElem
-    //     .querySelector('.search-box')
-    //     .addEventListener('click', function () {});
     }
 }
 exports.default = new SearchView();
@@ -1257,7 +1279,6 @@ var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class PaginationView extends (0, _viewDefault.default) {
     _parentElem = document.querySelector(".pagination--section");
-    _page;
     _buildMarkup() {
         const totalPages = Math.ceil(this._data.results.length / this._data.resPerPage);
         const next = `<div class="page--no page--no--next" data-page-no="${this._data.pageNo + 1}">
@@ -1272,7 +1293,6 @@ class PaginationView extends (0, _viewDefault.default) {
       </svg>
       <span>Page${this._data.pageNo - 1}</span>
     </div>`;
-        // console.log(totalPages);
         //on page 1 and there are more pages
         if (totalPages > 1 && this._data.pageNo === 1) return next;
         else if (totalPages === 1) return ``;
@@ -1285,6 +1305,9 @@ class PaginationView extends (0, _viewDefault.default) {
             if (!target) return;
             const page = +target.dataset.pageNo;
             handle(page);
+            document.querySelector(".main-container").scrollIntoView({
+                behavior: "smooth"
+            });
         });
     }
 }

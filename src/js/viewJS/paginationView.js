@@ -3,7 +3,7 @@ import icons from 'url:../../img/icons.svg';
 
 class PaginationView extends View {
   _parentElem = document.querySelector('.pagination--section');
-  _page;
+
   _buildMarkup() {
     const totalPages = Math.ceil(
       this._data.results.length / this._data.resPerPage
@@ -26,7 +26,6 @@ class PaginationView extends View {
       <span>Page${this._data.pageNo - 1}</span>
     </div>`;
 
-    // console.log(totalPages);
     //on page 1 and there are more pages
     if (totalPages > 1 && this._data.pageNo === 1) {
       return next;
@@ -52,6 +51,9 @@ class PaginationView extends View {
       const page = +target.dataset.pageNo;
 
       handle(page);
+      document
+        .querySelector('.main-container')
+        .scrollIntoView({ behavior: 'smooth' });
     });
   }
 }
