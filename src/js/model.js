@@ -49,3 +49,11 @@ export async function loadSearch(searchKey) {
     throw err;
   }
 }
+
+export const getSearchPaged = function (page = state.searchedResults.pageNo) {
+  state.searchedResults.pageNo = page;
+  const start = (page - 1) * RES_PER_PAGE;
+  const end = page * RES_PER_PAGE;
+
+  return state.searchedResults.results.slice(start, end);
+};

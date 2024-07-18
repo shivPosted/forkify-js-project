@@ -28,14 +28,6 @@ const controlRecipe = async function () {
   }
 };
 
-const getSearchPaged = function (page = model.state.searchedResults.pageNo) {
-  model.state.searchedResults.pageNo = page;
-  const start = (page - 1) * RES_PER_PAGE;
-  const end = page * RES_PER_PAGE;
-
-  return model.state.searchedResults.results.slice(start, end);
-};
-
 const controlSearch = async function () {
   try {
     resultsView.renderSpinner();
@@ -43,7 +35,7 @@ const controlSearch = async function () {
     if (!searchKey) return;
     await model.loadSearch(searchKey);
 
-    resultsView.render(getSearchPaged());
+    resultsView.render(model.getSearchPaged());
 
     paginationView.render(model.state.searchedResults);
   } catch (err) {
@@ -52,9 +44,9 @@ const controlSearch = async function () {
   }
 };
 
-const controlPagination = function () {
+const controlPagination = function (page) {
+  resultsView.render(model.getSearchPaged(page));
   paginationView.render(model.state.searchedResults);
-  resultsView.render(getSearchPaged(paginationView._data.pageNo));
 };
 
 function init() {

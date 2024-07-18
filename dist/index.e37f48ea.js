@@ -611,28 +611,22 @@ const controlRecipe = async function() {
         (0, _recipeViewJsDefault.default).handleError();
     }
 };
-const getSearchPaged = function(page = _modelJs.state.searchedResults.pageNo) {
-    _modelJs.state.searchedResults.pageNo = page;
-    const start = (page - 1) * (0, _configJs.RES_PER_PAGE);
-    const end = page * (0, _configJs.RES_PER_PAGE);
-    return _modelJs.state.searchedResults.results.slice(start, end);
-};
 const controlSearch = async function() {
     try {
         (0, _resultsViewJsDefault.default).renderSpinner();
         const searchKey = (0, _searchViewJsDefault.default).getQuery();
         if (!searchKey) return;
         await _modelJs.loadSearch(searchKey);
-        (0, _resultsViewJsDefault.default).render(getSearchPaged());
+        (0, _resultsViewJsDefault.default).render(_modelJs.getSearchPaged());
         (0, _paginationViewJsDefault.default).render(_modelJs.state.searchedResults);
     } catch (err) {
         console.log(err);
         (0, _resultsViewJsDefault.default).handleError();
     }
 };
-const controlPagination = function() {
+const controlPagination = function(page) {
+    (0, _resultsViewJsDefault.default).render(_modelJs.getSearchPaged(page));
     (0, _paginationViewJsDefault.default).render(_modelJs.state.searchedResults);
-    (0, _resultsViewJsDefault.default).render(getSearchPaged((0, _paginationViewJsDefault.default)._data.pageNo));
 };
 function init() {
     (0, _recipeViewJsDefault.default).renderEventHandler(controlRecipe);
@@ -648,6 +642,7 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "state", ()=>state);
 parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearch", ()=>loadSearch);
+parcelHelpers.export(exports, "getSearchPaged", ()=>getSearchPaged);
 var _configJs = require("./config.js");
 var _helperJs = require("./helper.js");
 const state = {
@@ -693,6 +688,12 @@ async function loadSearch(searchKey) {
         throw err;
     }
 }
+const getSearchPaged = function(page = state.searchedResults.pageNo) {
+    state.searchedResults.pageNo = page;
+    const start = (page - 1) * (0, _configJs.RES_PER_PAGE);
+    const end = page * (0, _configJs.RES_PER_PAGE);
+    return state.searchedResults.results.slice(start, end);
+};
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"k5Hzs","./helper.js":"lVRAz"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -1256,6 +1257,7 @@ var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class PaginationView extends (0, _viewDefault.default) {
     _parentElem = document.querySelector(".pagination--section");
+    _page;
     _buildMarkup() {
         const totalPages = Math.ceil(this._data.results.length / this._data.resPerPage);
         const next = `<div class="page--no page--no--next" data-page-no="${this._data.pageNo + 1}">
@@ -1281,8 +1283,8 @@ class PaginationView extends (0, _viewDefault.default) {
         this._parentElem.addEventListener("click", (e)=>{
             const target = e.target.closest(".page--no");
             if (!target) return;
-            target.classList.contains("page--no--prev") ? this._data.pageNo -= 1 : this._data.pageNo += 1;
-            handle();
+            const page = +target.dataset.pageNo;
+            handle(page);
         });
     }
 }
