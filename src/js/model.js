@@ -61,6 +61,7 @@ export const getSearchPaged = function (page = state.searchedResults.pageNo) {
 };
 
 export const changeServings = function (servingOps) {
+  if (state.recipe.servings === 1 && servingOps === '-') return;
   state.recipe.ingredients.forEach(ing => {
     if (!ing.quantity) return;
     const divider = ing.quantity / state.recipe.servings;

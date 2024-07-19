@@ -88,9 +88,7 @@ class RecipeView extends View {
     this._parentElem.addEventListener('click', function (e) {
       const target = e.target.closest('.ing-updater');
       if (!target) return;
-      console.log(target);
       const operator = target.dataset.iconOp;
-      console.log(operator);
       handle(operator);
     });
   }

@@ -4,6 +4,7 @@ import recipeView from './viewJS/recipeView.js';
 import searchView from './viewJS/searchView.js';
 import resultsView from './viewJS/resultsView.js';
 import paginationView from './viewJS/paginationView.js';
+const elem = document.querySelector('.recipe-detailed-info');
 
 import { RES_PER_PAGE } from './config.js';
 
@@ -50,8 +51,7 @@ const controlPagination = function (page) {
 const controlServings = function (operator) {
   model.changeServings(operator);
   // ingredientsView.render(model.state.recipe.ingredients);
-  recipeView.render(model.state.recipe);
-  console.log('click');
+  recipeView.update(model.state.recipe);
 };
 
 function init() {

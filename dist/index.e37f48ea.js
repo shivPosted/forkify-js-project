@@ -595,6 +595,7 @@ var _resultsViewJsDefault = parcelHelpers.interopDefault(_resultsViewJs);
 var _paginationViewJs = require("./viewJS/paginationView.js");
 var _paginationViewJsDefault = parcelHelpers.interopDefault(_paginationViewJs);
 var _configJs = require("./config.js");
+const elem = document.querySelector(".recipe-detailed-info");
 const controlRecipe = async function() {
     //1.loading the recipe
     const id = window.location.hash.slice(1);
@@ -629,8 +630,7 @@ const controlPagination = function(page) {
 const controlServings = function(operator) {
     _modelJs.changeServings(operator);
     // ingredientsView.render(model.state.recipe.ingredients);
-    (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
-    console.log("click");
+    (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
 };
 function init() {
     (0, _recipeViewJsDefault.default).renderEventHandler(controlRecipe);
@@ -703,6 +703,7 @@ const getSearchPaged = function(page = state.searchedResults.pageNo) {
     return state.searchedResults.results.slice(start, end);
 };
 const changeServings = function(servingOps) {
+    if (state.recipe.servings === 1 && servingOps === "-") return;
     state.recipe.ingredients.forEach((ing)=>{
         if (!ing.quantity) return;
         const divider = ing.quantity / state.recipe.servings;
@@ -876,9 +877,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
         this._parentElem.addEventListener("click", function(e) {
             const target = e.target.closest(".ing-updater");
             if (!target) return;
-            console.log(target);
             const operator = target.dataset.iconOp;
-            console.log(operator);
             handle(operator);
         });
     }
@@ -1212,6 +1211,16 @@ class View {
           </div>
     `;
         this._parentElem.insertAdjacentHTML("afterbegin", markUp);
+    }
+    update(data) {
+        this._data = data;
+        const newMarkup = this._buildMarkup();
+        const newDOM = document.createRange().createContextualFragment(newMarkup);
+        const newElem = Array.from(newDOM.querySelectorAll("*"));
+        const curElem = Array.from(this._parentElem.querySelectorAll("*"));
+        newElem.forEach((newElem, i)=>{
+            if (!newElem.isEqualNode(curElem[i]) && newElem.firstChild?.nodeValue && newElem.firstChild?.nodeValue.trim() !== "") curElem[i].textContent = newElem.textContent;
+        });
     }
 }
 exports.default = View;
