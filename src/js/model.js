@@ -30,7 +30,7 @@ export async function loadRecipe(id) {
       id: recipe.id,
     };
 
-    state.bookmarks.find(bookmark => bookmark.id === state.recipe.id)
+    state.bookmarks.some(bookmark => bookmark.id === id)
       ? (state.recipe.isBookMarked = true)
       : (state.recipe.isBookMarked = false);
   } catch (err) {
@@ -80,28 +80,47 @@ export const changeServings = function (servingOps) {
   else state.recipe.servings -= 1;
 };
 
-export const addBookmark = function () {
+const alterLocalStorageBookmark = function () {
+  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+};
+
+export const alterBookmark = function () {
   state.recipe.isBookMarked = !state.recipe.isBookMarked;
   // if (!state.recipe.isBookMarked) {
   //   state.bookmarks.shift();
   //   return;
   // }
+  const id = window.location.hash.slice(1);
 
+  //removing a bookmark
   if (!state.recipe.isBookMarked) {
     for (const [i, value] of state.bookmarks.entries()) {
-      if (state.recipe.id === value.id) {
-        console.log(i, value);
+      if (id === value.id) {
         state.bookmarks.splice(i, 1);
+        alterLocalStorageBookmark();
       }
     }
     return;
   }
 
-  const isThere = state.bookmarks.find((bookmark, i) => {
-    return state.recipe.id === bookmark.id;
+  const isThere = state.bookmarks.some(bookmark => {
+    return id === bookmark.id;
   });
 
   //not adding bookmark if already present
   if (isThere) return;
-  else state.bookmarks.unshift(state.recipe);
+  //adding the bookmark
+  else {
+    state.bookmarks.unshift(state.recipe);
+    alterLocalStorageBookmark();
+  }
 };
+
+const init = function () {
+  const storage = localStorage.getItem('bookmarks');
+  // if (storage) state.bookmarks = storage;
+  if (storage) state.bookmarks = JSON.parse(storage);
+  console.log(JSON.parse(storage));
+};
+
+init();

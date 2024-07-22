@@ -1,9 +1,9 @@
 5903
-57/home/shiv/Projects/Forkify/src/js/viewJS/bookmarkView.js1721640550208577048 0
+57/home/shiv/Projects/Forkify/src/js/viewJS/bookmarkView.js1721647054898578441 0
 67/home/shiv/Projects/Forkify/forkify-architecture-recipe-loading.png1715894968934420885 0
-37/home/shiv/Projects/Forkify/style.css1721581931504658340 0
+37/home/shiv/Projects/Forkify/style.css1721643816388571534 0
 55/home/shiv/Projects/Forkify/src/js/viewJS/searchView.js1721304387339886414 0
-48/home/shiv/Projects/Forkify/src/js/controller.js1721639831538579111 0
+48/home/shiv/Projects/Forkify/src/js/controller.js1721647134688579456 0
 44/home/shiv/Projects/Forkify/src/js/helper.js1721204148360996068 0
 34/home/shiv/Projects/Forkify/src/js1721197402410997670 1
 45/home/shiv/Projects/Forkify/src/img/icons.svg1715894968934420885 0
@@ -2181,7 +2181,7 @@
 63/home/shiv/Projects/Forkify/node_modules/@parcel/diagnostic/src1721126723240457426 1
 76/home/shiv/Projects/Forkify/node_modules/css-tree/lib/syntax/node/AnPlusB.js1721126724540457431 0
 90/home/shiv/Projects/Forkify/node_modules/@swc/helpers/_/_class_check_private_static_access1721126724690457432 1
-55/home/shiv/Projects/Forkify/src/js/viewJS/recipeView.js1721481282532894209 0
+55/home/shiv/Projects/Forkify/src/js/viewJS/recipeView.js1721644819478578384 0
 72/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/regions/RO.js1721126725150457433 0
 71/home/shiv/Projects/Forkify/node_modules/detect-libc/lib/detect-libc.js1721126723390457427 0
 103/home/shiv/Projects/Forkify/node_modules/@swc/helpers/_/_class_static_private_field_update/package.json1721126724800457432 0
@@ -3425,7 +3425,7 @@
 91/home/shiv/Projects/Forkify/node_modules/@swc/helpers/esm/_tagged_template_literal_loose.js1721126724500457431 0
 61/home/shiv/Projects/Forkify/node_modules/msgpackr/SECURITY.md1721126724360457430 0
 73/home/shiv/Projects/Forkify/node_modules/css-tree/cjs/generator/index.cjs1721126724200457430 0
-43/home/shiv/Projects/Forkify/src/js/model.js1721642033248578677 0
+43/home/shiv/Projects/Forkify/src/js/model.js1721646005958577554 0
 71/home/shiv/Projects/Forkify/node_modules/css-what/lib/es/stringify.d.ts1721126723740457428 0
 118/home/shiv/Projects/Forkify/node_modules/@parcel/optimizer-htmlnano/node_modules/svgo/plugins/moveGroupAttrsToElems.js1721126723940457429 0
 59/home/shiv/Projects/Forkify/node_modules/msgpackr/pack.d.ts1721126724360457430 0
@@ -4469,7 +4469,7 @@
 74/home/shiv/Projects/Forkify/node_modules/@parcel/config-default/index.json1721126723260457426 0
 64/home/shiv/Projects/Forkify/node_modules/to-regex-range/index.js1721126723140457426 0
 51/home/shiv/Projects/Forkify/node_modules/picocolors1721126723270457426 1
-49/home/shiv/Projects/Forkify/src/js/viewJS/view.js1721477859102863273 0
+49/home/shiv/Projects/Forkify/src/js/viewJS/view.js1721647011108578729 0
 77/home/shiv/Projects/Forkify/node_modules/@parcel/source-map/dist/node.js.flow1721126723140457426 0
 89/home/shiv/Projects/Forkify/node_modules/caniuse-lite/data/features/css-module-scripts.js1721126724640457431 0
 98/home/shiv/Projects/Forkify/node_modules/csso/cjs/restructure/prepare/createDeclarationIndexer.cjs1721126723730457428 0

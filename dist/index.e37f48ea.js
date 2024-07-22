@@ -604,9 +604,9 @@ const controlRecipe = async function() {
     try {
         (0, _recipeViewJsDefault.default).renderSpinner();
         (0, _resultsViewJsDefault.default).update(_modelJs.getSearchPaged());
-        (0, _bookmarkViewJsDefault.default).update(_modelJs.state.bookmarks);
         await _modelJs.loadRecipe(id);
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
+        (0, _bookmarkViewJsDefault.default).update(_modelJs.state.bookmarks);
     //2. rendering the recipe
     } catch (err) {
         console.log(err);
@@ -637,12 +637,16 @@ const controlServings = function(operator) {
 };
 const controlBookmarks = function() {
     // const recipeToBookmark = model.recipe.filter;
-    _modelJs.addBookmark();
+    _modelJs.alterBookmark();
     (0, _recipeViewJsDefault.default).update(_modelJs.state.recipe);
     (0, _bookmarkViewJsDefault.default).render(_modelJs.state.bookmarks);
     console.log(_modelJs.state.bookmarks);
 };
+const controlBookmarkLoader = function() {
+    (0, _bookmarkViewJsDefault.default).render(_modelJs.state.bookmarks);
+};
 function init() {
+    (0, _bookmarkViewJsDefault.default).addBookmarkLoader(controlBookmarkLoader);
     (0, _recipeViewJsDefault.default).renderEventHandler(controlRecipe);
     (0, _searchViewJsDefault.default).addHandlerSearch(controlSearch);
     (0, _paginationViewJsDefault.default).addHandlerClick(controlPagination);
@@ -663,7 +667,7 @@ parcelHelpers.export(exports, "loadRecipe", ()=>loadRecipe);
 parcelHelpers.export(exports, "loadSearch", ()=>loadSearch);
 parcelHelpers.export(exports, "getSearchPaged", ()=>getSearchPaged);
 parcelHelpers.export(exports, "changeServings", ()=>changeServings);
-parcelHelpers.export(exports, "addBookmark", ()=>addBookmark);
+parcelHelpers.export(exports, "alterBookmark", ()=>alterBookmark);
 var _configJs = require("./config.js");
 var _helperJs = require("./helper.js");
 const state = {
@@ -690,7 +694,7 @@ async function loadRecipe(id) {
             ingredients: recipe.ingredients,
             id: recipe.id
         };
-        state.bookmarks.find((bookmark)=>bookmark.id === state.recipe.id) ? state.recipe.isBookMarked = true : state.recipe.isBookMarked = false;
+        state.bookmarks.some((bookmark)=>bookmark.id === id) ? state.recipe.isBookMarked = true : state.recipe.isBookMarked = false;
     } catch (err) {
         throw err;
     }
@@ -730,26 +734,41 @@ const changeServings = function(servingOps) {
     if (servingOps === "+") state.recipe.servings += 1;
     else state.recipe.servings -= 1;
 };
-const addBookmark = function() {
+const alterLocalStorageBookmark = function() {
+    localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+};
+const alterBookmark = function() {
     state.recipe.isBookMarked = !state.recipe.isBookMarked;
     // if (!state.recipe.isBookMarked) {
     //   state.bookmarks.shift();
     //   return;
     // }
+    const id = window.location.hash.slice(1);
+    //removing a bookmark
     if (!state.recipe.isBookMarked) {
-        for (const [i, value] of state.bookmarks.entries())if (state.recipe.id === value.id) {
-            console.log(i, value);
+        for (const [i, value] of state.bookmarks.entries())if (id === value.id) {
             state.bookmarks.splice(i, 1);
+            alterLocalStorageBookmark();
         }
         return;
     }
-    const isThere = state.bookmarks.find((bookmark, i)=>{
-        return state.recipe.id === bookmark.id;
+    const isThere = state.bookmarks.some((bookmark)=>{
+        return id === bookmark.id;
     });
     //not adding bookmark if already present
     if (isThere) return;
-    else state.bookmarks.unshift(state.recipe);
+    else {
+        state.bookmarks.unshift(state.recipe);
+        alterLocalStorageBookmark();
+    }
 };
+const init = function() {
+    const storage = localStorage.getItem("bookmarks");
+    // if (storage) state.bookmarks = storage;
+    if (storage) state.bookmarks = JSON.parse(storage);
+    console.log(JSON.parse(storage));
+};
+init();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./config.js":"k5Hzs","./helper.js":"lVRAz"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -832,6 +851,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
     _data;
     _parentElem = document.querySelector(".recipe-detailed-info");
     _errorMsg = "We could not find that recipe.Please try again \uD83D\uDE22\uD83D\uDE22";
+    localStorageData;
     //getting rnder function from the controller which inturn is calling this mehtod
     renderEventHandler(render) {
         [
@@ -839,6 +859,7 @@ class RecipeView extends (0, _viewJsDefault.default) {
             "load"
         ].forEach((ev)=>{
             window.addEventListener(ev, render);
+            if (ev === "load") this.localStorageData = localStorage.getItem("bookmark");
         });
     }
     _buildMarkup() {
@@ -1265,10 +1286,7 @@ class View {
         const curEl = Array.from(this._parentElem.querySelectorAll("*"));
         newElem.forEach((newElem, i)=>{
             const curElem = curEl[i];
-            if (!newElem.isEqualNode(curElem) && newElem.firstChild?.nodeValue && newElem.firstChild?.nodeValue.trim() !== "") {
-                console.log(newElem.classList);
-                curElem.textContent = newElem.textContent;
-            }
+            if (!newElem.isEqualNode(curElem) && newElem.firstChild?.nodeValue && newElem.firstChild?.nodeValue.trim() !== "") curElem.textContent = newElem.textContent;
             //updating attributes
             if (!newElem.isEqualNode(curElem)) Array.from(newElem.attributes).forEach((attr)=>{
                 curElem.setAttribute(attr.name, attr.value);
@@ -1407,17 +1425,22 @@ class BookmarkView extends (0, _viewDefault.default) {
       </a>`;
         }, "");
     }
+    addBookmarkLoader(handle) {
+        window.addEventListener("load", handle);
+    }
     addHandlerMouseOver() {
-        document.querySelector(".add-bookmark").addEventListener("mouseenter", (e)=>{
+        document.querySelector(".add-bookmark").addEventListener("mouseenter", ()=>{
+            this._parentElem.addEventListener("mouseenter", function() {
+                this.classList.remove("hidden");
+            });
             this._parentElem.classList.remove("hidden");
         });
     }
     addHandlerMouseLeave() {
-        document.querySelector(".main-container").addEventListener("mouseleave", (e)=>{
-            this._parentElem.classList.add("hidden");
+        this._parentElem.addEventListener("mouseleave", function() {
+            this.classList.add("hidden");
         });
     }
-    addHandlerClick() {}
 }
 exports.default = new BookmarkView();
 

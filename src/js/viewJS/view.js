@@ -49,7 +49,6 @@ export default class View {
         newElem.firstChild?.nodeValue &&
         newElem.firstChild?.nodeValue.trim() !== ''
       ) {
-        console.log(newElem.classList);
         curElem.textContent = newElem.textContent;
       }
 

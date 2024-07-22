@@ -28,23 +28,26 @@ class BookmarkView extends View {
     }, '');
   }
 
+  addBookmarkLoader(handle) {
+    window.addEventListener('load', handle);
+  }
+
   addHandlerMouseOver() {
     document
       .querySelector('.add-bookmark')
-      .addEventListener('mouseenter', e => {
+      .addEventListener('mouseenter', () => {
+        this._parentElem.addEventListener('mouseenter', function () {
+          this.classList.remove('hidden');
+        });
         this._parentElem.classList.remove('hidden');
       });
   }
 
   addHandlerMouseLeave() {
-    document
-      .querySelector('.main-container')
-      .addEventListener('mouseleave', e => {
-        this._parentElem.classList.add('hidden');
-      });
+    this._parentElem.addEventListener('mouseleave', function () {
+      this.classList.add('hidden');
+    });
   }
-
-  addHandlerClick() {}
 }
 
 export default new BookmarkView();

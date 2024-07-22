@@ -6,11 +6,13 @@ class RecipeView extends View {
   _data;
   _parentElem = document.querySelector('.recipe-detailed-info');
   _errorMsg = 'We could not find that recipe.Please try again 😢😢';
-
+  localStorageData;
   //getting rnder function from the controller which inturn is calling this mehtod
   renderEventHandler(render) {
     ['hashchange', 'load'].forEach(ev => {
       window.addEventListener(ev, render);
+      if (ev === 'load')
+        this.localStorageData = localStorage.getItem('bookmark');
     });
   }
 
