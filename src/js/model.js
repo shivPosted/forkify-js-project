@@ -9,6 +9,7 @@ export const state = {
     pageNo: 1,
     resPerPage: RES_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 export async function loadRecipe(id) {
@@ -26,8 +27,12 @@ export async function loadRecipe(id) {
       publisher: recipe.publisher,
       servings: recipe.servings,
       ingredients: recipe.ingredients,
+      id: recipe.id,
     };
-    console.log(recipe.ingredients);
+
+    state.bookmarks.find(bookmark => bookmark.id === state.recipe.id)
+      ? (state.recipe.isBookMarked = true)
+      : (state.recipe.isBookMarked = false);
   } catch (err) {
     throw err;
   }
@@ -73,4 +78,30 @@ export const changeServings = function (servingOps) {
   });
   if (servingOps === '+') state.recipe.servings += 1;
   else state.recipe.servings -= 1;
+};
+
+export const addBookmark = function () {
+  state.recipe.isBookMarked = !state.recipe.isBookMarked;
+  // if (!state.recipe.isBookMarked) {
+  //   state.bookmarks.shift();
+  //   return;
+  // }
+
+  if (!state.recipe.isBookMarked) {
+    for (const [i, value] of state.bookmarks.entries()) {
+      if (state.recipe.id === value.id) {
+        console.log(i, value);
+        state.bookmarks.splice(i, 1);
+      }
+    }
+    return;
+  }
+
+  const isThere = state.bookmarks.find((bookmark, i) => {
+    return state.recipe.id === bookmark.id;
+  });
+
+  //not adding bookmark if already present
+  if (isThere) return;
+  else state.bookmarks.unshift(state.recipe);
 };

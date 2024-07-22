@@ -10,8 +10,9 @@ class ResultsView extends View {
       return '';
     }
     return this._data.reduce((accum, elem) => {
+      const hash = window.location.hash.slice(1);
       return (accum += `<a href="#${elem.id}" class="preview--recipe">
-      <div class="search---items---row">
+      <div class="search---items---row ${hash === elem.id ? 'selected' : ''}">
       <div class="recipe-img-container">
       <img src="${elem.img}" class="recipe-img" alt="${elem.title} image" />
       </div>
@@ -23,6 +24,18 @@ class ResultsView extends View {
       </a>`);
     }, '');
   }
+
+  // addHandlerClick() {
+  //   this._parentElem.addEventListener('click', function (e) {
+  //     const target = e.target.closest('.search---items---row');
+  //     if (!target) return;
+  //     this.querySelectorAll('.search---items---row').forEach(element => {
+  //       element.classList.remove('selected');
+  //     });
+
+  //     target.classList.add('selected');
+  //   });
+  // }
 }
 
 export default new ResultsView();

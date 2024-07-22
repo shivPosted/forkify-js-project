@@ -40,15 +40,25 @@ export default class View {
     const newMarkup = this._buildMarkup();
     const newDOM = document.createRange().createContextualFragment(newMarkup);
     const newElem = Array.from(newDOM.querySelectorAll('*'));
-    const curElem = Array.from(this._parentElem.querySelectorAll('*'));
+    const curEl = Array.from(this._parentElem.querySelectorAll('*'));
 
     newElem.forEach((newElem, i) => {
+      const curElem = curEl[i];
       if (
-        !newElem.isEqualNode(curElem[i]) &&
+        !newElem.isEqualNode(curElem) &&
         newElem.firstChild?.nodeValue &&
         newElem.firstChild?.nodeValue.trim() !== ''
       ) {
-        curElem[i].textContent = newElem.textContent;
+        console.log(newElem.classList);
+        curElem.textContent = newElem.textContent;
+      }
+
+      //updating attributes
+
+      if (!newElem.isEqualNode(curElem)) {
+        Array.from(newElem.attributes).forEach(attr => {
+          curElem.setAttribute(attr.name, attr.value);
+        });
       }
     });
   }

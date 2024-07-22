@@ -43,7 +43,9 @@ class RecipeView extends View {
       </div>
       <div class="bookmark--icon--container">
         <svg class="bookmark--icon">
-          <use href="${icons}#icon-bookmark"></use>
+          <use href="${icons}#icon-bookmark${
+      this._data.isBookMarked ? '-fill' : ''
+    }"></use>
         </svg>
       </div>
     </div>
@@ -91,6 +93,16 @@ class RecipeView extends View {
       const operator = target.dataset.iconOp;
       handle(operator);
     });
+  }
+
+  addHandlerBookmark(handle) {
+    this._parentElem
+      // .querySelector('.recipe--overview--options')
+      .addEventListener('click', function (e) {
+        const target = e.target.closest('.bookmark--icon--container');
+        if (!target) return;
+        handle();
+      });
   }
 }
 
