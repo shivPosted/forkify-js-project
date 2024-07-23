@@ -647,6 +647,9 @@ const controlBookmarks = function() {
 const controlBookmarkLoader = function() {
     (0, _bookmarkViewJsDefault.default).render(_modelJs.state.bookmarks);
 };
+const controlForm = function(newRecipe) {
+    console.log(newRecipe);
+};
 function init() {
     (0, _bookmarkViewJsDefault.default).addBookmarkLoader(controlBookmarkLoader);
     (0, _recipeViewJsDefault.default).renderEventHandler(controlRecipe);
@@ -655,7 +658,7 @@ function init() {
     (0, _recipeViewJsDefault.default).addHandlerIngredients(controlServings);
     // resultsView.addHandlerClick();
     (0, _recipeViewJsDefault.default).addHandlerBookmark(controlBookmarks);
-    (0, _addRecipeViewJsDefault.default).addEventHandlerClick();
+    (0, _addRecipeViewJsDefault.default).handleForm(controlForm);
 }
 init();
 
@@ -669,6 +672,7 @@ parcelHelpers.export(exports, "loadSearch", ()=>loadSearch);
 parcelHelpers.export(exports, "getSearchPaged", ()=>getSearchPaged);
 parcelHelpers.export(exports, "changeServings", ()=>changeServings);
 parcelHelpers.export(exports, "alterBookmark", ()=>alterBookmark);
+parcelHelpers.export(exports, "addNewRecipe", ()=>addNewRecipe);
 var _configJs = require("./config.js");
 var _helperJs = require("./helper.js");
 const state = {
@@ -763,6 +767,7 @@ const alterBookmark = function() {
         alterLocalStorageBookmark();
     }
 };
+const addNewRecipe = function(recipe) {};
 const init = function() {
     const storage = localStorage.getItem("bookmarks");
     // if (storage) state.bookmarks = storage;
@@ -1406,7 +1411,7 @@ class BookmarkView extends (0, _viewDefault.default) {
     _parentElem = document.querySelector(".bookmarks--section");
     constructor(){
         super();
-        this.addHandlerMouse();
+        this._addHandlerMouse();
     }
     _buildMarkup() {
         if (this._data.length === 0) return `<svg class="bookmark--icon ">
@@ -1433,7 +1438,7 @@ class BookmarkView extends (0, _viewDefault.default) {
     addBookmarkLoader(handle) {
         window.addEventListener("load", handle);
     }
-    addHandlerMouse() {
+    _addHandlerMouse() {
         [
             "mouseenter",
             "mouseleave"
@@ -1459,11 +1464,18 @@ class BookmarkView extends (0, _viewDefault.default) {
 exports.default = new BookmarkView();
 
 },{"./view":"g5XMt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"loVOp"}],"g3jXC":[function(require,module,exports) {
-// import View from "./view";
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class AddRecipeView {
-    addEventHandlerClick() {
+var _view = require("./view");
+var _viewDefault = parcelHelpers.interopDefault(_view);
+class AddRecipeView extends (0, _viewDefault.default) {
+    _parentElem = document.querySelector(".recipe-form");
+    constructor(){
+        super();
+        this._addEventHandlerClick();
+        this.handleForm();
+    }
+    _addEventHandlerClick() {
         document.body.addEventListener("click", function(e) {
             const addRecipeBtn = e.target.closest(".add-recipe");
             const overlay = document.querySelector(".overlay");
@@ -1474,16 +1486,25 @@ class AddRecipeView {
             if (addRecipeBtn) {
                 recipeAdderPopUp.classList.remove("hidden");
                 overlay.classList.remove("hidden");
-                overlay = e.target.contains(".overlay");
             } else if (closePopUp || e.target === overlay) {
                 recipeAdderPopUp.classList.add("hidden");
                 overlay.classList.add("hidden");
             }
         });
     }
+    handleForm(handle) {
+        this._parentElem.addEventListener("submit", function(e) {
+            e.preventDefault();
+            const data = [
+                ...new FormData(this)
+            ];
+            const newRecipe = Object.fromEntries(data);
+            handle(newRecipe);
+        });
+    }
 }
 exports.default = new AddRecipeView();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./view":"g5XMt"}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
 
 //# sourceMappingURL=index.e37f48ea.js.map

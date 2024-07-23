@@ -6,7 +6,7 @@ class BookmarkView extends View {
 
   constructor() {
     super();
-    this.addHandlerMouse();
+    this._addHandlerMouse();
   }
   _buildMarkup() {
     if (this._data.length === 0)
@@ -36,7 +36,7 @@ class BookmarkView extends View {
     window.addEventListener('load', handle);
   }
 
-  addHandlerMouse() {
+  _addHandlerMouse() {
     ['mouseenter', 'mouseleave'].forEach(ev => {
       if (ev === 'mouseleave') {
         this._parentElem.addEventListener(ev, function () {

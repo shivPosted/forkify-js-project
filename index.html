@@ -318,34 +318,36 @@
     </div>
     <div class="recipe-adder-pop-up hidden">
       <button class="close-pop-up">&times;</button>
-      <form action="#" class="recipe-submit-form">
+      <form class="recipe-form">
         <div class="upload-column upload-column-1">
           <h6>RECIPE DATA</h6>
           <label for="title-recipe">Title</label>
-          <input type="text" id="title-recipe" />
+          <input type="text" id="title-recipe" value="title" name="title" />
           <label for="url-recipe">URL</label>
-          <input type="text" id="url-recipe" />
+          <input type="text" id="url-recipe" name="source" />
           <label for="image-url-recipe">Image url</label>
-          <input type="text" id="image-url-recipe" />
+          <input type="text" id="image-url-recipe" name="img" />
           <label for="publisher-recipe">Publisher</label>
-          <input type="text" id="publisher-recipe" />
+          <input type="text" id="publisher-recipe" name="publisher" />
+          <label for="prep-time">PrepTime</label>
+          <input type="number" id="prep-time" name="time" />
           <label for="serving-recipe">Servings</label>
-          <input type="number" id="serving-recipe" />
+          <input type="number" id="serving-recipe" name="servings" />
         </div>
         <div class="upload-column upload-column-2">
           <h6>INGREDIENTS</h6>
           <label for="ingredient-1-recipe">Ingredient 1</label>
-          <input type="text" id="ingredient-1-recipe" />
+          <input type="text" id="ingredient-1-recipe" name="ingredient-1" />
           <label for="ingredient-2-recipe">Ingredient 2</label>
-          <input type="text" id="ingredient-2-recipe" />
+          <input type="text" id="ingredient-2-recipe" name="ingredient-2" />
           <label for="ingredient-3-recipe">Ingredient 3</label>
-          <input type="text" id="ingredient-3-recipe" />
+          <input type="text" id="ingredient-3-recipe" name="ingredient-3" />
           <label for="ingredient-4-recipe">Ingredient 4</label>
-          <input type="text" id="ingredient-4-recipe" />
+          <input type="text" id="ingredient-4-recipe" name="ingredient-4" />
           <label for="ingredient-5-recipe">Ingredient 5</label>
-          <input type="text" id="ingredient-5-recipe" />
+          <input type="text" id="ingredient-5-recipe" name="ingredient-5" />
           <label for="ingredient-6-recipe">Ingredient 6</label>
-          <input type="text" id="ingredient-6-recipe" />
+          <input type="text" id="ingredient-6-recipe" name="ingredient-6" />
         </div>
         <button class="upload-recipe-btn">
           <svg class="upload--icon">

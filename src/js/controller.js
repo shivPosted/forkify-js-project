@@ -70,6 +70,10 @@ const controlBookmarkLoader = function () {
   bookmarkView.render(model.state.bookmarks);
 };
 
+const controlForm = function (newRecipe) {
+  console.log(newRecipe);
+};
+
 function init() {
   bookmarkView.addBookmarkLoader(controlBookmarkLoader);
   recipeView.renderEventHandler(controlRecipe);
@@ -78,7 +82,7 @@ function init() {
   recipeView.addHandlerIngredients(controlServings);
   // resultsView.addHandlerClick();
   recipeView.addHandlerBookmark(controlBookmarks);
-  addRecipeView.addEventHandlerClick();
+  addRecipeView.handleForm(controlForm);
 }
 
 init();

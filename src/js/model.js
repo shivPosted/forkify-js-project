@@ -116,6 +116,8 @@ export const alterBookmark = function () {
   }
 };
 
+export const addNewRecipe = function (recipe) {};
+
 const init = function () {
   const storage = localStorage.getItem('bookmarks');
   // if (storage) state.bookmarks = storage;

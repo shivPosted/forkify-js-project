@@ -469,7 +469,7 @@ h5 {
   transform: translate(-50%, -50%) scale(0);
 }
 
-.recipe-submit-form {
+.recipe-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 6.4rem;
