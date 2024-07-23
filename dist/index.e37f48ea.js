@@ -655,8 +655,6 @@ function init() {
     (0, _recipeViewJsDefault.default).addHandlerIngredients(controlServings);
     // resultsView.addHandlerClick();
     (0, _recipeViewJsDefault.default).addHandlerBookmark(controlBookmarks);
-    (0, _bookmarkViewJsDefault.default).addHandlerMouseOver();
-    (0, _bookmarkViewJsDefault.default).addHandlerMouseLeave();
     (0, _addRecipeViewJsDefault.default).addEventHandlerClick();
 }
 init();
@@ -1406,6 +1404,10 @@ var _iconsSvg = require("url:../../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 class BookmarkView extends (0, _viewDefault.default) {
     _parentElem = document.querySelector(".bookmarks--section");
+    constructor(){
+        super();
+        this.addHandlerMouse();
+    }
     _buildMarkup() {
         if (this._data.length === 0) return `<svg class="bookmark--icon ">
               <use href="${0, _iconsSvgDefault.default}#icon-alert-circle"></use>
@@ -1431,17 +1433,26 @@ class BookmarkView extends (0, _viewDefault.default) {
     addBookmarkLoader(handle) {
         window.addEventListener("load", handle);
     }
-    addHandlerMouseOver() {
-        document.querySelector(".add-bookmark").addEventListener("mouseenter", ()=>{
-            this._parentElem.addEventListener("mouseenter", function() {
-                this.classList.remove("hidden");
-            });
-            this._parentElem.classList.remove("hidden");
-        });
-    }
-    addHandlerMouseLeave() {
-        this._parentElem.addEventListener("mouseleave", function() {
-            this.classList.add("hidden");
+    addHandlerMouse() {
+        [
+            "mouseenter",
+            "mouseleave"
+        ].forEach((ev)=>{
+            if (ev === "mouseleave") {
+                this._parentElem.addEventListener(ev, function() {
+                    this.classList.add("hidden");
+                });
+                document.querySelector(".add-bookmark").addEventListener(ev, ()=>{
+                    this._parentElem.classList.add("hidden");
+                });
+            } else if (ev === "mouseenter") {
+                this._parentElem.addEventListener(ev, function() {
+                    this.classList.remove("hidden");
+                });
+                document.querySelector(".add-bookmark").addEventListener(ev, ()=>{
+                    this._parentElem.classList.remove("hidden");
+                });
+            }
         });
     }
 }
@@ -1451,8 +1462,7 @@ exports.default = new BookmarkView();
 // import View from "./view";
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-class addRecipeView {
-    _parentElem = document.querySelector(".add-recipe");
+class AddRecipeView {
     addEventHandlerClick() {
         document.body.addEventListener("click", function(e) {
             const addRecipeBtn = e.target.closest(".add-recipe");
@@ -1469,12 +1479,10 @@ class addRecipeView {
                 recipeAdderPopUp.classList.add("hidden");
                 overlay.classList.add("hidden");
             }
-        // document.querySelector('.recipe-adder-pop-up').classList.remove('hidden');
-        // document.querySelector('.overlay').classList.remove('hidden');
         });
     }
 }
-exports.default = new addRecipeView();
+exports.default = new AddRecipeView();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
 

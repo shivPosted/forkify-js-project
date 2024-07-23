@@ -1,8 +1,6 @@
 // import View from "./view";
 
-class addRecipeView {
-  _parentElem = document.querySelector('.add-recipe');
-
+class AddRecipeView {
   addEventHandlerClick() {
     document.body.addEventListener('click', function (e) {
       const addRecipeBtn = e.target.closest('.add-recipe');
@@ -20,10 +18,8 @@ class addRecipeView {
         recipeAdderPopUp.classList.add('hidden');
         overlay.classList.add('hidden');
       }
-      // document.querySelector('.recipe-adder-pop-up').classList.remove('hidden');
-      // document.querySelector('.overlay').classList.remove('hidden');
     });
   }
 }
 
-export default new addRecipeView();
+export default new AddRecipeView();

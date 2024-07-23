@@ -4,6 +4,10 @@ import icons from 'url:../../img/icons.svg';
 class BookmarkView extends View {
   _parentElem = document.querySelector('.bookmarks--section');
 
+  constructor() {
+    super();
+    this.addHandlerMouse();
+  }
   _buildMarkup() {
     if (this._data.length === 0)
       return `<svg class="bookmark--icon ">
@@ -32,20 +36,23 @@ class BookmarkView extends View {
     window.addEventListener('load', handle);
   }
 
-  addHandlerMouseOver() {
-    document
-      .querySelector('.add-bookmark')
-      .addEventListener('mouseenter', () => {
-        this._parentElem.addEventListener('mouseenter', function () {
+  addHandlerMouse() {
+    ['mouseenter', 'mouseleave'].forEach(ev => {
+      if (ev === 'mouseleave') {
+        this._parentElem.addEventListener(ev, function () {
+          this.classList.add('hidden');
+        });
+        document.querySelector('.add-bookmark').addEventListener(ev, () => {
+          this._parentElem.classList.add('hidden');
+        });
+      } else if (ev === 'mouseenter') {
+        this._parentElem.addEventListener(ev, function () {
           this.classList.remove('hidden');
         });
-        this._parentElem.classList.remove('hidden');
-      });
-  }
-
-  addHandlerMouseLeave() {
-    this._parentElem.addEventListener('mouseleave', function () {
-      this.classList.add('hidden');
+        document.querySelector('.add-bookmark').addEventListener(ev, () => {
+          this._parentElem.classList.remove('hidden');
+        });
+      }
     });
   }
 }

@@ -78,8 +78,6 @@ function init() {
   recipeView.addHandlerIngredients(controlServings);
   // resultsView.addHandlerClick();
   recipeView.addHandlerBookmark(controlBookmarks);
-  bookmarkView.addHandlerMouseOver();
-  bookmarkView.addHandlerMouseLeave();
   addRecipeView.addEventHandlerClick();
 }
 
