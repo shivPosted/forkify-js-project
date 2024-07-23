@@ -1,9 +1,10 @@
-5903
+5904
+58/home/shiv/Projects/Forkify/src/js/viewJS/addRecipeView.js1721723804483595877 0
 57/home/shiv/Projects/Forkify/src/js/viewJS/bookmarkView.js1721647054898578441 0
 67/home/shiv/Projects/Forkify/forkify-architecture-recipe-loading.png1715894968934420885 0
 37/home/shiv/Projects/Forkify/style.css1721643816388571534 0
 55/home/shiv/Projects/Forkify/src/js/viewJS/searchView.js1721304387339886414 0
-48/home/shiv/Projects/Forkify/src/js/controller.js1721647134688579456 0
+48/home/shiv/Projects/Forkify/src/js/controller.js1721722952023594663 0
 44/home/shiv/Projects/Forkify/src/js/helper.js1721204148360996068 0
 34/home/shiv/Projects/Forkify/src/js1721197402410997670 1
 45/home/shiv/Projects/Forkify/src/img/icons.svg1715894968934420885 0

@@ -597,16 +597,18 @@ var _paginationViewJsDefault = parcelHelpers.interopDefault(_paginationViewJs);
 var _bookmarkViewJs = require("./viewJS/bookmarkView.js");
 var _bookmarkViewJsDefault = parcelHelpers.interopDefault(_bookmarkViewJs);
 var _configJs = require("./config.js");
+var _addRecipeViewJs = require("./viewJS/addRecipeView.js");
+var _addRecipeViewJsDefault = parcelHelpers.interopDefault(_addRecipeViewJs);
 const controlRecipe = async function() {
     //1.loading the recipe
     const id = window.location.hash.slice(1);
     if (!id) return;
     try {
         (0, _recipeViewJsDefault.default).renderSpinner();
+        (0, _bookmarkViewJsDefault.default).update(_modelJs.state.bookmarks);
         (0, _resultsViewJsDefault.default).update(_modelJs.getSearchPaged());
         await _modelJs.loadRecipe(id);
         (0, _recipeViewJsDefault.default).render(_modelJs.state.recipe);
-        (0, _bookmarkViewJsDefault.default).update(_modelJs.state.bookmarks);
     //2. rendering the recipe
     } catch (err) {
         console.log(err);
@@ -655,10 +657,11 @@ function init() {
     (0, _recipeViewJsDefault.default).addHandlerBookmark(controlBookmarks);
     (0, _bookmarkViewJsDefault.default).addHandlerMouseOver();
     (0, _bookmarkViewJsDefault.default).addHandlerMouseLeave();
+    (0, _addRecipeViewJsDefault.default).addEventHandlerClick();
 }
 init();
 
-},{"./model.js":"Y4A21","./viewJS/recipeView.js":"dz1cH","./viewJS/searchView.js":"hNmQm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./viewJS/resultsView.js":"1h5Te","./viewJS/paginationView.js":"5OYDP","./config.js":"k5Hzs","./viewJS/bookmarkView.js":"gkZv0"}],"Y4A21":[function(require,module,exports) {
+},{"./model.js":"Y4A21","./viewJS/recipeView.js":"dz1cH","./viewJS/searchView.js":"hNmQm","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./viewJS/resultsView.js":"1h5Te","./viewJS/paginationView.js":"5OYDP","./config.js":"k5Hzs","./viewJS/bookmarkView.js":"gkZv0","./viewJS/addRecipeView.js":"g3jXC"}],"Y4A21":[function(require,module,exports) {
 // import { async } from 'regenerator-runtime';
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -1444,6 +1447,35 @@ class BookmarkView extends (0, _viewDefault.default) {
 }
 exports.default = new BookmarkView();
 
-},{"./view":"g5XMt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"loVOp"}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
+},{"./view":"g5XMt","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","url:../../img/icons.svg":"loVOp"}],"g3jXC":[function(require,module,exports) {
+// import View from "./view";
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class addRecipeView {
+    _parentElem = document.querySelector(".add-recipe");
+    addEventHandlerClick() {
+        document.body.addEventListener("click", function(e) {
+            const addRecipeBtn = e.target.closest(".add-recipe");
+            const overlay = document.querySelector(".overlay");
+            const recipeAdderPopUp = document.querySelector(".recipe-adder-pop-up");
+            const closePopUp = e.target.closest(".close-pop-up");
+            if (!(addRecipeBtn || overlay || closePopUp)) return;
+            // console.log('clicked');
+            if (addRecipeBtn) {
+                recipeAdderPopUp.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+                overlay = e.target.contains(".overlay");
+            } else if (closePopUp || e.target === overlay) {
+                recipeAdderPopUp.classList.add("hidden");
+                overlay.classList.add("hidden");
+            }
+        // document.querySelector('.recipe-adder-pop-up').classList.remove('hidden');
+        // document.querySelector('.overlay').classList.remove('hidden');
+        });
+    }
+}
+exports.default = new addRecipeView();
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["hycaY","aenu9"], "aenu9", "parcelRequirec01b")
 
 //# sourceMappingURL=index.e37f48ea.js.map

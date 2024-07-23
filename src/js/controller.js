@@ -6,6 +6,7 @@ import resultsView from './viewJS/resultsView.js';
 import paginationView from './viewJS/paginationView.js';
 import bookmarkView from './viewJS/bookmarkView.js';
 import { RES_PER_PAGE } from './config.js';
+import addRecipeView from './viewJS/addRecipeView.js';
 
 const controlRecipe = async function () {
   //1.loading the recipe
@@ -15,13 +16,14 @@ const controlRecipe = async function () {
   try {
     recipeView.renderSpinner();
 
+    bookmarkView.update(model.state.bookmarks);
+
     resultsView.update(model.getSearchPaged());
 
     await model.loadRecipe(id);
 
     recipeView.render(model.state.recipe);
 
-    bookmarkView.update(model.state.bookmarks);
     //2. rendering the recipe
   } catch (err) {
     console.log(err);
@@ -78,6 +80,7 @@ function init() {
   recipeView.addHandlerBookmark(controlBookmarks);
   bookmarkView.addHandlerMouseOver();
   bookmarkView.addHandlerMouseLeave();
+  addRecipeView.addEventHandlerClick();
 }
 
 init();
