@@ -76,19 +76,21 @@ const controlBookmarkLoader = function () {
   bookmarkView.render(model.state.bookmarks);
 };
 
-const controlForm = function (newRecipe) {
-  try {
-    model.addNewRecipe(newRecipe);
-    addRecipeView.renderSpinner();
-    setTimeout(() => {
-      recipeView.render(model.state.recipe);
-      addRecipeView.closePopUp();
-      controlBookmarks();
-    }, 2500);
-  } catch (err) {
-    addRecipeView.handleError(err.message);
-  }
-};
+// will be implemented in future when I build my own API
+
+// const controlForm = function (newRecipe) {
+//   try {
+//     model.addNewRecipe(newRecipe);
+//     addRecipeView.renderSpinner();
+//     setTimeout(() => {
+//       recipeView.render(model.state.recipe);
+//       addRecipeView.closePopUp();
+//       controlBookmarks();
+//     }, 2500);
+//   } catch (err) {
+//     addRecipeView.handleError(err.message);
+//   }
+// };
 
 function init() {
   bookmarkView.addBookmarkLoader(controlBookmarkLoader);
@@ -98,7 +100,7 @@ function init() {
   recipeView.addHandlerIngredients(controlServings);
   // resultsView.addHandlerClick();
   recipeView.addHandlerBookmark(controlBookmarks);
-  addRecipeView.handleForm(controlForm);
+  // addRecipeView.handleForm(controlForm);  // will be implemented in future when I build my own API
 }
 
 init();

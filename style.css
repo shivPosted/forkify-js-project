@@ -514,11 +514,12 @@ h5 {
   justify-self: center;
   border-radius: 100vw;
   transition: all 0.3s;
-  cursor: pointer;
+  filter: grayscale(0.3);
+  /* cursor: pointer; */
 }
-.upload-recipe-btn:hover {
+/* .upload-recipe-btn:hover {
   transform: scale(1.05);
-}
+} */
 
 .upload-recipe-btn svg {
   width: 3.2rem;
