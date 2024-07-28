@@ -1,5 +1,5 @@
 import icons from '../../img/icons.svg'; //parcel 2
-import { Fraction } from 'fractional';
+const Fraction = require('fractional').Fraction;
 import View from './view.js';
 // console.log(Fraction);
 class RecipeView extends View {
