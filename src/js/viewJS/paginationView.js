@@ -12,7 +12,7 @@ class PaginationView extends View {
     const next = `<div class="page--no page--no--next" data-page-no="${
       this._data.pageNo + 1
     }">
-      <span>Page${this._data.pageNo + 1}</span>
+      <span>Page ${this._data.pageNo + 1}</span>
       <svg class="arrow--icon">
         <use href="${icons}#icon-arrow-right"></use>
       </svg>
@@ -23,12 +23,15 @@ class PaginationView extends View {
       <svg class="arrow--icon">
         <use href="${icons}#icon-arrow-left"></use>
       </svg>
-      <span>Page${this._data.pageNo - 1}</span>
+      <span>Page ${this._data.pageNo - 1}</span>
     </div>`;
-
+    const pageInfo = ` <div class="on-what-page">
+            <span class="current-page">${this._data.pageNo} </span> /
+            <div class="total-page"> ${totalPages}</div>
+          </div>`;
     //on page 1 and there are more pages
     if (totalPages > 1 && this._data.pageNo === 1) {
-      return next;
+      return pageInfo + next;
     }
     //on page 1 and there are no pages
     else if (totalPages === 1) {
@@ -36,11 +39,11 @@ class PaginationView extends View {
     }
     //on last page
     else if (this._data.pageNo === totalPages) {
-      return prev;
+      return prev + pageInfo;
     }
     //on other pages
     else {
-      return prev + next;
+      return prev + pageInfo + next;
     }
   }
 

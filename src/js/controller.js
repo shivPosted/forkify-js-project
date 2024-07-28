@@ -13,6 +13,11 @@ const controlRecipe = async function () {
 
   const id = window.location.hash.slice(1);
   if (!id) return;
+
+  // if (id === 'undefined') {
+  //   recipeView.render(model.state.recipe);
+  //   return;
+  // }
   try {
     recipeView.renderSpinner();
 
@@ -23,6 +28,7 @@ const controlRecipe = async function () {
     await model.loadRecipe(id);
 
     recipeView.render(model.state.recipe);
+    console.log(model.state.recipe);
 
     //2. rendering the recipe
   } catch (err) {
@@ -71,7 +77,17 @@ const controlBookmarkLoader = function () {
 };
 
 const controlForm = function (newRecipe) {
-  console.log(newRecipe);
+  try {
+    model.addNewRecipe(newRecipe);
+    addRecipeView.renderSpinner();
+    setTimeout(() => {
+      recipeView.render(model.state.recipe);
+      addRecipeView.closePopUp();
+      controlBookmarks();
+    }, 2500);
+  } catch (err) {
+    addRecipeView.handleError(err.message);
+  }
 };
 
 function init() {
