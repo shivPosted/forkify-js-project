@@ -1,5 +1,5 @@
 import icons from '../../img/icons.svg'; //parcel 2
-const Fraction = require('fractional').Fraction;
+// const Fraction = require('fractional').Fraction;
 import View from './view.js';
 // console.log(Fraction);
 class RecipeView extends View {
@@ -56,7 +56,8 @@ class RecipeView extends View {
       <ul class="ingredient--list">
        ${this._data.ingredients.reduce((accum, elem) => {
          let unit, quantity;
-         quantity = elem.quantity ? new Fraction(elem.quantity).toString() : '';
+         //  quantity = elem.quantity ? new Fraction(elem.quantity).toString() : '';
+         quantity = elem.quantity ? elem.quantity : '';
          unit = elem.unit ? elem.unit : '';
          return (accum += `<li class="ingredient--list--item">
                                 <svg class="check--icon">
