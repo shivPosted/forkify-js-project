@@ -1,6 +1,6 @@
 import { TIME_OUT_SEC } from '../config';
 import View from './view';
-import icons from 'url:../../img/icons.svg';
+import icons from '../../img/icons.svg';
 
 class AddRecipeView extends View {
   _parentElem = document.querySelector('.recipe-adder-pop-up');

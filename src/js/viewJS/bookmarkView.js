@@ -1,5 +1,5 @@
 import View from './view';
-import icons from 'url:../../img/icons.svg';
+import icons from '../../img/icons.svg';
 
 class BookmarkView extends View {
   _parentElem = document.querySelector('.bookmarks--section');
